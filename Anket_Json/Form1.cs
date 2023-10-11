@@ -15,7 +15,12 @@ namespace Anket_Json
     public partial class Form1 : Form
     {
         bool flag = false;
-        List<User> users = new List<User>();
+        List<User> users = new List<User> {
+            new User{ Name="Anvar",Surname="Mammadov",Email="anvarm@gmail.com",Phone="994514268456",
+                BirthDate=new DateTime(2001,07,19),JsonFileName="anvar.json"},
+            new User{ Name="Murad",Surname="Gojayev",Email="muradg@gmail.com",Phone="994553453434",
+                BirthDate=new DateTime(2001,07,19),JsonFileName="murad.json"}
+        };
 
         User selectedUser = null;
         public Form1()
@@ -23,7 +28,12 @@ namespace Anket_Json
             InitializeComponent();
             dtpBirthDate.Format = DateTimePickerFormat.Custom;
             dtpBirthDate.CustomFormat = "dd/MM/yyyy";
+            FileManage.WriteJsonAllUser(users);
             users = FileManage.ReadJsonAllUser();
+            foreach (User user in users)
+            {
+                FileManage.WriteJson(user);
+            }
             listBox.DataSource = users;
             listBox.DisplayMember = nameof(User.Name);
             listBox.SelectedIndex = 0;
